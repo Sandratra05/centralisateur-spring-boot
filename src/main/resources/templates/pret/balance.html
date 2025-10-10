@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Solde restant du prêt</title>
+</head>
+<body>
+<h2>Solde restant du prêt</h2>
+<form th:action="@{/pret/balance}" method="post">
+    <label>Id Prêt:</label>
+    <input type="number" name="id" required><br>
+    <button type="submit">Voir le solde</button>
+</form>
+<div th:if="${balance}">
+    <p>Solde restant: <span th:text="${balance}"></span> €</p>
+</div>
+<div th:if="${error}">
+    <p th:text="${error}" style="color:red"></p>
+</div>
+<a href="/pret">Retour à l'index prêt</a>
+</body>
+</html>

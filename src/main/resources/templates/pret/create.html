@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Créer un prêt</title>
+</head>
+<body>
+<h2>Créer un prêt</h2>
+<form th:action="@{/pret/create}" method="post">
+    <label>Id Client:</label>
+    <input type="number" name="idClient" required><br>
+    <label>Montant:</label>
+    <input type="number" name="montant" step="0.01" required><br>
+    <label>Taux du prêt:</label>
+    <input type="number" name="tauxPret" step="0.01" required><br>
+    <label>Date début:</label>
+    <input type="date" name="dateDebut" required><br>
+    <label>Date fin:</label>
+    <input type="date" name="dateFin" required><br>
+    <button type="submit">Créer</button>
+</form>
+<div th:if="${message}">
+    <p th:text="${message}" style="color:green"></p>
+</div>
+<div th:if="${error}">
+    <p th:text="${error}" style="color:red"></p>
+</div>
+<a href="/pret">Retour à l'index prêt</a>
+</body>
+</html>

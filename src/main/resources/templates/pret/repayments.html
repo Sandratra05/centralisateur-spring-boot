@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des remboursements</title>
+</head>
+<body>
+<h2>Liste des remboursements</h2>
+<form th:action="@{/pret/repayments}" method="post">
+    <label>Id Prêt:</label>
+    <input type="number" name="id" required><br>
+    <button type="submit">Voir les remboursements</button>
+</form>
+<div th:if="${repayments}">
+    <table border="1">
+        <tr>
+            <th>Montant</th>
+            <th>Date</th>
+            <th>Mode de paiement</th>
+        </tr>
+        <tr th:each="r : ${repayments}">
+            <td th:text="${r.montant}"></td>
+            <td th:text="${r.datePaiement}"></td>
+            <td th:text="${r.modePaiement}"></td>
+        </tr>
+    </table>
+</div>
+<div th:if="${error}">
+    <p th:text="${error}" style="color:red"></p>
+</div>
+<a href="/pret">Retour à l'index prêt</a>
+</body>
+</html>
