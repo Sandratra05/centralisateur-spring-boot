@@ -23,11 +23,11 @@
         </thead>
         <tbody>
             <tr th:each="transaction : ${transactions}">
-                <td th:text="${transaction.id}"></td>
+                <td th:text="${transaction.idTransaction}"></td>
                 <td th:text="${transaction.type}"></td>
                 <td th:text="${transaction.montant}"></td>
                 <td th:text="${transaction.description}"></td>
-                <td th:text="${transaction.dateTransaction}"></td>
+                <td th:text="${transaction.dateMvt}"></td>
             </tr>
         </tbody>
     </table>
