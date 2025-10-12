@@ -8,7 +8,10 @@
     <h1>Voir les Transactions</h1>
     <form th:action="@{/courant/transactions}" method="post">
         <label for="id">ID Compte:</label>
-        <input type="number" id="id" name="id" required><br><br>
+        <select id="id" name="id" required>
+            <option value="">Sélectionnez un compte</option>
+            <option th:each="account : ${accounts}" th:value="${account.idCompteCourant}" th:text="${account.idClient} + ' (ID: ' + ${account.idCompteCourant} + ')'"></option>
+        </select><br><br>
         <button type="submit">Voir</button>
     </form>
     <table th:if="${transactions}" border="1">

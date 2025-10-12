@@ -2,8 +2,10 @@ package com.centralisateur.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -20,6 +22,20 @@ public class CompteCourantClient {
     public CompteCourantClient(RestTemplate restTemplate, @Value("${courant.service.url}") String baseUrl) {
         this.restTemplate = restTemplate;
         this.baseUrl = baseUrl;
+    }
+
+    public List<Map<String, Object>> getAllAccounts() {
+        String url = UriComponentsBuilder.fromUriString(baseUrl)
+                .path("/compte-courant/all")
+                .toUriString();
+        try {
+            ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(
+                    url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Map<String, Object>>>() {});
+            return response.getBody();
+        } catch (RestClientException e) {
+            // Log or handle the error appropriately
+            throw new RuntimeException("Erreur lors de la récupération des comptes : " + e.getMessage(), e);
+        }
     }
 
     public Map<String, Object> createAccount(String idClient, BigDecimal initialSolde) {

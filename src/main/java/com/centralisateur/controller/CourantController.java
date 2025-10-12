@@ -49,10 +49,11 @@ public class CourantController {
     }
 
     @GetMapping("/deposit")
-    public String depositForm() {
+    public String depositForm(Model model) {
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "courant/deposit";
     }
-
     @PostMapping("/deposit")
     public String deposit(@RequestParam Long id, @RequestParam BigDecimal amount, @RequestParam String description, Model model) {
         try {
@@ -70,7 +71,9 @@ public class CourantController {
     }
 
     @GetMapping("/withdraw")
-    public String withdrawForm() {
+    public String withdrawForm(Model model) {
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "courant/withdraw";
     }
 
@@ -91,10 +94,11 @@ public class CourantController {
     }
 
     @GetMapping("/balance")
-    public String balanceForm() {
+    public String balanceForm(Model model) {
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "courant/balance";
     }
-
     @PostMapping("/balance")
     public String getBalance(@RequestParam Long id, Model model) {
         try {
@@ -107,7 +111,9 @@ public class CourantController {
     }
 
     @GetMapping("/transactions")
-    public String transactionsForm() {
+    public String transactionsForm(Model model) {
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "courant/transactions";
     }
 
