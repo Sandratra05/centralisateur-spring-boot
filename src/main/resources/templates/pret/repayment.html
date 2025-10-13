@@ -1,25 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Remboursement de prêt</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<h2>Remboursement de prêt</h2>
-<form th:action="@{/pret/repayment}" method="post">
-    <label>Id Prêt:</label>
-    <input type="number" name="id" required><br>
-    <label>Montant à rembourser:</label>
-    <input type="number" name="amount" step="0.01" required><br>
-    <label>Mode de paiement:</label>
-    <input type="text" name="modePaiement" required><br>
-    <button type="submit">Rembourser</button>
-</form>
-<div th:if="${message}">
-    <p th:text="${message}" style="color:green"></p>
-</div>
-<div th:if="${error}">
-    <p th:text="${error}" style="color:red"></p>
-</div>
-<a href="/pret">Retour à l'index prêt</a>
+    <div class="container">
+        <h1>Remboursement de prêt</h1>
+        <form th:action="@{/pret/repayment}" method="post">
+            <div class="form-group">
+                <label>Id Prêt:</label>
+                <select name="id" required>
+                    <option value="">Sélectionnez un prêt</option>
+                    <option th:each="account : ${accounts}" th:value="${account.idComptePret}" th:text="'Prêt #' + ${account.idComptePret} + ' (Client: ' + ${account.idClient} + ')'"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Montant à rembourser:</label>
+                <input type="number" name="amount" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label>Mode de paiement:</label>
+                <input type="text" name="modePaiement" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Rembourser</button>
+        </form>
+
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <a href="/pret" class="back-link">Retour à l'index prêt</a>
+    </div>
 </body>
 </html>

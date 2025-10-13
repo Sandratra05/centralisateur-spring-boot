@@ -45,6 +45,7 @@ public class CourantController {
         } catch (Exception ex) {
             model.addAttribute("error", "Échec de création: " + ex.getMessage());
         }
+
         return "courant/create";
     }
 
@@ -67,6 +68,9 @@ public class CourantController {
         } catch (Exception e) {
             model.addAttribute("error", "Erreur lors du dépôt : " + e.getMessage());
         }
+
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "courant/deposit";
     }
 
@@ -90,6 +94,9 @@ public class CourantController {
         } catch (Exception e) {
             model.addAttribute("error", "Erreur lors du retrait : " + e.getMessage());
         }
+
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "courant/withdraw";
     }
 
@@ -107,6 +114,10 @@ public class CourantController {
         } catch (Exception e) {
             model.addAttribute("error", "Erreur lors de la récupération du solde : " + e.getMessage());
         }
+
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
+
         return "courant/balance";
     }
 
@@ -125,6 +136,9 @@ public class CourantController {
         } catch (Exception e) {
             model.addAttribute("error", "Erreur lors de la récupération des transactions : " + e.getMessage());
         }
+
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "courant/transactions";
     }
 }
