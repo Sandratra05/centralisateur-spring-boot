@@ -2,15 +2,22 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Centralisateur - Accueil</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <h1>Bienvenue dans le Centralisateur Banking</h1>
-    <p>Le projet Spring Boot fonctionne correctement.</p>
-    <a href="/db-test">Tester la connexion à la base de données</a>
-    <br>
-    <a href="/courant">Gérer le Compte Courant</a>
-    <br>
-    <a href="/pret">Gérer le Compte Prêt</a>
+    <div class="container">
+        <h1>Bienvenue dans le Centralisateur Banking</h1>
+        <div class="info-card">
+            <p>Le projet Spring Boot fonctionne correctement.</p>
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="/db-test">Tester la connexion à la base de données</a></li>
+            <li><a href="/courant">Gérer le Compte Courant</a></li>
+            <li><a href="/pret">Gérer le Compte Prêt</a></li>
+        </ul>
+    </div>
 </body>
 </html>

@@ -45,14 +45,16 @@ public class CourantController {
         } catch (Exception ex) {
             model.addAttribute("error", "Échec de création: " + ex.getMessage());
         }
+
         return "courant/create";
     }
 
     @GetMapping("/deposit")
-    public String depositForm() {
+    public String depositForm(Model model) {
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "courant/deposit";
     }
-
     @PostMapping("/deposit")
     public String deposit(@RequestParam Long id, @RequestParam BigDecimal amount, @RequestParam String description, Model model) {
         try {
@@ -66,11 +68,16 @@ public class CourantController {
         } catch (Exception e) {
             model.addAttribute("error", "Erreur lors du dépôt : " + e.getMessage());
         }
+
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "courant/deposit";
     }
 
     @GetMapping("/withdraw")
-    public String withdrawForm() {
+    public String withdrawForm(Model model) {
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "courant/withdraw";
     }
 
@@ -87,14 +94,18 @@ public class CourantController {
         } catch (Exception e) {
             model.addAttribute("error", "Erreur lors du retrait : " + e.getMessage());
         }
+
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "courant/withdraw";
     }
 
     @GetMapping("/balance")
-    public String balanceForm() {
+    public String balanceForm(Model model) {
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "courant/balance";
     }
-
     @PostMapping("/balance")
     public String getBalance(@RequestParam Long id, Model model) {
         try {
@@ -103,11 +114,17 @@ public class CourantController {
         } catch (Exception e) {
             model.addAttribute("error", "Erreur lors de la récupération du solde : " + e.getMessage());
         }
+
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
+
         return "courant/balance";
     }
 
     @GetMapping("/transactions")
-    public String transactionsForm() {
+    public String transactionsForm(Model model) {
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "courant/transactions";
     }
 
@@ -119,6 +136,9 @@ public class CourantController {
         } catch (Exception e) {
             model.addAttribute("error", "Erreur lors de la récupération des transactions : " + e.getMessage());
         }
+
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "courant/transactions";
     }
 }

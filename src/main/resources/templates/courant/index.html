@@ -2,18 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compte Courant - Accueil</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <h1>Gestion du Compte Courant</h1>
-    <ul>
-        <li><a href="/courant/create">Créer un compte</a></li>
-        <li><a href="/courant/deposit">Effectuer un dépôt</a></li>
-        <li><a href="/courant/withdraw">Effectuer un retrait</a></li>
-        <li><a href="/courant/balance">Consulter le solde</a></li>
-        <li><a href="/courant/transactions">Voir les transactions</a></li>
-    </ul>
-    <a href="/">Retour à l'accueil</a>
+    <div class="container">
+        <h1>Gestion du Compte Courant</h1>
+        <ul class="nav-menu">
+            <li><a href="/courant/create" class="btn-success">Créer un compte</a></li>
+            <li><a href="/courant/deposit" class="btn-primary">Effectuer un dépôt</a></li>
+            <li><a href="/courant/withdraw" class="btn-warning">Effectuer un retrait</a></li>
+            <li><a href="/courant/balance" class="btn-primary">Consulter le solde</a></li>
+            <li><a href="/courant/transactions" class="btn-primary">Voir les transactions</a></li>
+        </ul>
+        <a href="/" class="back-link">Retour à l'accueil</a>
+    </div>
 </body>
 </html>
-

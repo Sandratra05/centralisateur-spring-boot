@@ -41,7 +41,9 @@ public class PretController {
     }
 
     @GetMapping("/repayment")
-    public String showRepaymentForm() {
+    public String showRepaymentForm(Model model) {
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "pret/repayment";
     }
 
@@ -56,11 +58,15 @@ public class PretController {
         } catch (Exception e) {
             model.addAttribute("error", "Erreur remboursement: " + e.getMessage());
         }
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "pret/repayment";
     }
 
     @GetMapping("/balance")
-    public String showBalanceForm() {
+    public String showBalanceForm(Model model) {
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "pret/balance";
     }
 
@@ -76,7 +82,9 @@ public class PretController {
     }
 
     @GetMapping("/repayments")
-    public String showRepaymentsForm() {
+    public String showRepaymentsForm(Model model) {
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "pret/repayments";
     }
 
@@ -88,7 +96,8 @@ public class PretController {
         } catch (Exception e) {
             model.addAttribute("error", "Erreur récupération remboursements: " + e.getMessage());
         }
+        List<Map<String, Object>> accounts = client.getAllAccounts();
+        model.addAttribute("accounts", accounts);
         return "pret/repayments";
     }
 }
-

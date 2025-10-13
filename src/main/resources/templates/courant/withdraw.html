@@ -2,22 +2,36 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Retrait sur Compte Courant</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <h1>Effectuer un Retrait</h1>
-    <form th:action="@{/courant/withdraw}" method="post">
-        <label for="id">ID Compte:</label>
-        <input type="number" id="id" name="id" required><br><br>
-        <label for="amount">Montant:</label>
-        <input type="number" step="0.01" id="amount" name="amount" required><br><br>
-        <label for="description">Description:</label>
-        <input type="text" id="description" name="description" required><br><br>
-        <button type="submit">Retirer</button>
-    </form>
-    <p th:if="${message}" th:text="${message}" style="color: green;"></p>
-    <p th:if="${error}" th:text="${error}" style="color: red;"></p>
-    <a href="/courant">Retour</a>
+    <div class="container">
+        <h1>Effectuer un Retrait</h1>
+        <form th:action="@{/courant/withdraw}" method="post">
+            <div class="form-group">
+                <label for="id">ID Compte:</label>
+                <select id="id" name="id" required>
+                    <option value="">Sélectionnez un compte</option>
+                    <option th:each="account : ${accounts}" th:value="${account.idCompteCourant}" th:text="${account.idClient} + ' (ID: ' + ${account.idCompteCourant} + ')'"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="amount">Montant:</label>
+                <input type="number" step="0.01" id="amount" name="amount" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description" required>
+            </div>
+            <button type="submit" class="btn btn-warning">Retirer</button>
+        </form>
+
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <a href="/courant" class="back-link">Retour</a>
+    </div>
 </body>
 </html>
-
