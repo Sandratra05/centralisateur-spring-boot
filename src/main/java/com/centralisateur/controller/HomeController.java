@@ -54,4 +54,9 @@ public class HomeController {
     public String pretHome() {
         return "pret/index";
     }
+
+    @GetMapping("/depot")
+    public String depotHome() {
+        return "depot/index";
+    }
 }
