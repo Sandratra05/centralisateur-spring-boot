@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrait sur Compte Dépôt</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>Effectuer un Retrait</h1>
+        <form th:action="@{/depot/withdraw}" method="post">
+            <div class="form-group">
+                <label for="id">ID Compte:</label>
+                <select id="id" name="id" required>
+                    <option value="">Sélectionnez un compte</option>
+                    <option th:each="account : ${accounts}" th:value="${account.id_compte_depot}" th:text="${account.id_client} + ' (ID: ' + ${account.id_compte_depot} + ')'"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="amount">Montant:</label>
+                <input type="number" step="0.01" id="amount" name="amount" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description" required>
+            </div>
+            <button type="submit" class="btn btn-warning">Retirer</button>
+        </form>
+
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <a href="/" class="back-link">Retour</a>
+    </div>
+</body>
+</html>
