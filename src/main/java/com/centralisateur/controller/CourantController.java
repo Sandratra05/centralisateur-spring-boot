@@ -1,6 +1,9 @@
 package com.centralisateur.controller;
 
+import com.centralisateur.entity.Client;
+import com.centralisateur.service.ClientService;
 import com.centralisateur.service.CompteCourantClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,12 +12,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/courant")
 public class CourantController {
 
     private final CompteCourantClient client;
+
+    @Autowired
+    private ClientService clientService;
 
     public CourantController(CompteCourantClient client) {
         this.client = client;
@@ -40,6 +47,13 @@ public class CourantController {
                 return "courant/create";
             }
 
+            Long id = Long.parseLong(idClient);
+            Optional<Client> clientOpt = clientService.findById(id);
+            if(clientOpt.isEmpty()) {
+                model.addAttribute("error", "Le client n'existe pas.");
+                return "courant/create";
+            }
+
             var account = client.createAccount(idClient, initialSolde);
             model.addAttribute("message", "Compte créé: " + account);
         } catch (Exception ex) {
@@ -58,6 +72,12 @@ public class CourantController {
     @PostMapping("/deposit")
     public String deposit(@RequestParam Long id, @RequestParam BigDecimal amount, @RequestParam String description, Model model) {
         try {
+            Optional<Client> clientOpt = clientService.findById(id);
+            if(clientOpt.isEmpty()) {
+                model.addAttribute("error", "Le client n'existe pas.");
+                return "courant/deposit";
+            }
+
             if (amount.compareTo(BigDecimal.ZERO) < 0) {
                 model.addAttribute("error", "L'argent à déposer doit être \u2265 0.");
                 return "courant/deposit";
@@ -84,6 +104,12 @@ public class CourantController {
     @PostMapping("/withdraw")
     public String withdraw(@RequestParam Long id, @RequestParam BigDecimal amount, @RequestParam String description, Model model) {
         try {
+            Optional<Client> clientOpt = clientService.findById(id);
+            if(clientOpt.isEmpty()) {
+                model.addAttribute("error", "Le client n'existe pas.");
+                return "courant/withdraw";
+            }
+
             if (amount.compareTo(BigDecimal.ZERO) < 0) {
                 model.addAttribute("error", "L'argent à retirer doit être \u2265 0.");
                 return "courant/withdraw";
@@ -109,6 +135,12 @@ public class CourantController {
     @PostMapping("/balance")
     public String getBalance(@RequestParam Long id, Model model) {
         try {
+            Optional<Client> clientOpt = clientService.findById(id);
+            if(clientOpt.isEmpty()) {
+                model.addAttribute("error", "Le client n'existe pas.");
+                return "courant/balance";
+            }
+
             BigDecimal balance = client.getBalance(id);
             model.addAttribute("balance", balance);
         } catch (Exception e) {
@@ -131,6 +163,13 @@ public class CourantController {
     @PostMapping("/transactions")
     public String getTransactions(@RequestParam Long id, Model model) {
         try {
+
+            Optional<Client> clientOpt = clientService.findById(id);
+            if(clientOpt.isEmpty()) {
+                model.addAttribute("error", "Le client n'existe pas.");
+                return "courant/transactions";
+            }
+
             List<Map<String, Object>> transactions = client.getTransactions(id);
             model.addAttribute("transactions", transactions);
         } catch (Exception e) {

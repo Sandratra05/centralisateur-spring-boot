@@ -1,6 +1,9 @@
 package com.centralisateur.controller;
 
+import com.centralisateur.entity.Client;
+import com.centralisateur.service.ClientService;
 import com.centralisateur.service.CompteDepotClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -8,12 +11,16 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/depot")
 public class DepotController {
 
     private final CompteDepotClient client;
+
+    @Autowired
+    private ClientService clientService;
 
     public DepotController(CompteDepotClient client) {
         this.client = client;
@@ -34,6 +41,12 @@ public class DepotController {
             Model model
     ) {
         try {
+            Optional<Client> clientOpt = clientService.findById((long) idClient);
+            if(clientOpt.isEmpty()) {
+                model.addAttribute("error", "Le client n'existe pas.");
+                return "depot/create";
+            }
+
             // Validation simple
             if (solde.compareTo(BigDecimal.ZERO) < 0) {
                 model.addAttribute("error", "Le solde initial doit être ≥ 0.");
@@ -68,6 +81,12 @@ public class DepotController {
     @PostMapping("/withdraw")
     public String withdraw(@RequestParam int id, @RequestParam BigDecimal amount, @RequestParam String description, Model model) {
         try {
+            Optional<Client> clientOpt = clientService.findById((long) id);
+            if(clientOpt.isEmpty()) {
+                model.addAttribute("error", "Le client n'existe pas.");
+                return "depot/withdraw";
+            }
+
             if (amount.compareTo(BigDecimal.ZERO) <= 0) {
                 model.addAttribute("error", "Le montant à retirer doit être > 0.");
                 return "depot/withdraw";
